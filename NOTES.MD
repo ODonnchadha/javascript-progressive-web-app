@@ -1,6 +1,6 @@
 Progressive Web Apps by Maximilian Schwarzmuller
 
-- Getting started: What are they?
+- Getting started: PWAs. What are they?
     1. Features added to any Web pages to enhance them to feel and work like native Web applications.
         - This does not necessarily mean only *responsive.*
     2. Three main descriptors:
@@ -27,3 +27,30 @@ Progressive Web Apps by Maximilian Schwarzmuller
     5. *Installation* of the progressive Web App on a mobile phone.
     6. Stupid Safari. We add meta tags to help us out.
     7. And IE.
+
+- Service Workers:
+    1. Behind the scenes. Offline ready. Next-generation. JavaScript is single-threaded.
+        a. They run on their own thread. They are decoupled from HTML pages. 
+        b. Manages all pages of a given scope. Lives on after pages have been closed. Run in the background.
+        c. Service workers are exceptional at reacting to events.
+    2. Listenable events: 
+        a. Fetch. Push notifications. Notification interaction. 
+        b. Background sync. e.g.: Failed POST. Service worker lifecycle.
+    3. Service Worker Lifecycle:
+        a. index.html loads app.js which registers sw.js.
+        ```javascript
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker
+                    .register('/sw.js')
+                    .then(function() {
+                        console.log('/sw.js');
+                });
+            }
+        ```
+        b. Registration: (1) Installation event. (2) Activation event. (3) Idle mode. (4) Terminate.
+        c. Browser support.
+        d. NOTE: navigator.serviceWorker.register() returns a promise. And they only work via https.
+        e. Non-lifecycle events.
+        f. And now back to the web app banners page since we have a service worker.
+        g. Andriod emulator. Elipsis => More Tools => Remote Devices.
+            1. Manifest. "Add to homescreen."
