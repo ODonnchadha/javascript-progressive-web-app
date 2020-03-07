@@ -20,3 +20,10 @@ Progressive Web Apps by Maximilian Schwarzmuller
     7. Progrssive Enhamcement.
 
 - Understanding the App Manifest:
+    1. Single file.
+    2. Why? Allow us to get our Web app on the home screen.
+    3. Where? How to test our minifest.json name/values. Application => Manifest within Chrome Debugger Tools.
+    4. Android Studio. Mobile device emulator. With the install feature.
+    5. *Installation* of the progressive Web App on a mobile phone.
+    6. Stupid Safari. We add meta tags to help us out.
+    7. And IE.
