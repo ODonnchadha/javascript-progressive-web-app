@@ -4,6 +4,23 @@ var closeCreatePostModalButton = document.querySelector('#close-create-post-moda
 
 function openCreatePostModal() {
   createPostArea.style.display = 'block';
+
+  if (deferredPromptBanner) {
+    deferredPromptBanner.prompt();
+
+    deferredPromptBanner.userChoice().then(function(result) {
+      console.log('result.outcome ', result);
+
+      if (result.outcome === 'dismissed') {
+        console.log('Cancelled result');
+      } else {
+        console.log('Successful result');
+      }
+
+    });
+
+    deferredPromptBanner = null;
+  }
 }
 
 function closeCreatePostModal() {
