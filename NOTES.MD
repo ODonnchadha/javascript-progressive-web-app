@@ -54,3 +54,147 @@ Progressive Web Apps by Maximilian Schwarzmuller
         f. And now back to the web app banners page since we have a service worker.
         g. Andriod emulator. Elipsis => More Tools => Remote Devices.
             1. Manifest. "Add to homescreen."
+
+- Promises and Fetch:
+    1. Promises can free us from callback hell. Here's a callback function.
+    ```javascript
+        setTimeout(function() {
+            console.log('Executed after timer');
+        }, 3000);
+        console.log('Executed after setTimeout()');
+    ```
+    2. Promise rejection:
+    ```javascript
+        var promise = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                resolve('Executed after timer');
+                reject('Broken');
+            }, 3000);
+        })
+        promise
+            .then(function(txt) {
+                console.log(txt);
+            }).catch(function(error) {
+                console.log(error);
+        });
+        console.log('Executed after setTimeout()');
+    ```
+    3. Fetch
+        a. Use httpbin.org for both GET and POST examples.
+    4. Fetch and CORS: { mode: cors } default. Response contains CORS headers.
+        a. HINT: { mode: no-cors } If server does not set the headers.
+    5. new XMLHttpRequest(); Synchronous code. More verbose syntax.
+        a. Have to use fetch. Only allowed asynchronous within a worker.
+    6. Need polyfills for fetch and promise. Note that service workers only work on modern browsers.
+
+```javascript
+// e.g.:
+var button = document.querySelector('#button');
+var output = document.querySelector('#output');
+button.addEventListener('click', function() {
+    // Create a new Promise and use setTimeout() inside the function that is passed to the constructor.
+    var promise = new Promise(function(resolve, reject) {
+        // setTimeout() stored inside the Promise.
+        setTimeout(function() {
+            resolve('https://swapi.co/api/people/1');
+        }, 3000);
+    });
+}).then(function(url) {
+    // Promise resolved.
+    return fetch(url);
+}).then(function(response) {
+    return response.json();
+}, function(error) {
+    console.warn(error);
+}).then(function(data) {
+    output.textContent = data.name;
+});
+
+button.addEventListener('click', function() {
+    // Create a new Promise and use setTimeout() inside the function that is passed to the constructor.
+    var promise = new Promise(function(resolve, reject) {
+        // setTimeout() stored inside the Promise.
+        setTimeout(function() {
+            resolve('https://httpbin.org/put');
+        }, 3000);
+    });
+}).then(function(url) {
+    // Promise resolved.
+    return fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Accept' : 'application/json'
+        },
+        body: JSON.stringify( {person: {name: 'X', age: 0}} )
+    });
+}).then(function(response) {
+    return response.json();
+})
+.then(function(data) {
+    output.textContent = data.json.person.name;
+})
+.catch(function(error) {
+    // Catch any error.
+    console.warn(error);
+});
+
+// Get
+fetch('https://httpbin.org/ip').then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        console.log(data);
+    }).catch(function(error) {
+        console.warn(error);
+});
+
+// Post
+fetch('https://httpbin.org/post', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({message: 'xyz'})
+    }).then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        console.log(data);
+    }).catch(function(error) {
+        console.warn(error);
+});
+```
+
+- Service Worker Caching: Offline capable.
+    1. Whys? Poor connection. No connection. Lie-fie.
+    2. The cache API. Multiple caches. Server (across the wire.) Browser. (Without explicit code.)
+        a. Key/value pairs. Request and response.
+        b. Service worker -> Cache <- JavaScript pages.
+        c. Retrieved versus sending network request.
+    3. Experimental technology. Incremental enhancement.
+    4. So... what do we want to cash? Identifying cacheable items.
+    5. Static pre-caching. Reminder: Service worker is only *installed* if it has changed.
+        a. Cache the assets that do not change, e.g.: App Shell, upon installation.
+        b. Do not overpopulate cache. Browser may 'clean it up.' Danger of lax in loading items
+        c. event.waitUntil() ensures completion before we blow past the installation handler.
+        d. event.request within the 'fetch' obtains the request object. 
+        e. So any sub-cache object with a match is returned. Returns null response. Do not catch.
+    6. The importance of storing the root '/' request. We cache requests. READ: URLs.
+    7. We should conditionally load the polyfills and not cache them.
+    8. Dynamic cache. Return entire promise to the chain.
+    ```javascript
+    return caches.open(CACHE_DYNAMIC_NAME)
+        .then(function(cache) {
+            cache.put(event.request.url, res.clone());
+            return res;
+        })
+    ```
+    9. Handling errors.
+    10. We are currently storing everything that we fetch in the dynamic cache. 
+        a. Manage cache versions rather than *update* the service worker.
+        b. e.g.: CACHE_STATIC_NAME = 'static-v4';
+    11. Clean up former caches based upon versioning. We could fetch an outdated version.
+    12. Optimizing:
+    13. Assignment: 
+        a. Ensure that we finish the installation before we begin caching. e.g.: event.waitUntil()
+        b. 'activate' runs at the start of a page being loaded. Will not interfere with an ongoing sw.
