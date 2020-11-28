@@ -1,8 +1,7 @@
-## Culled from an Udemy class entitled:
-## "Progressive Web Apps: The Complete Guide" 
+## Culled from an Udemy class entitled: "Progressive Web Apps: The Complete Guide" 
 - by Maximilian Schwarzmuller:
 
-### Getting started: PWAs. What are they?
+- Getting started: PWAs. What are they?
     1. Features added to any Web pages to enhance them to feel and work like native Web applications.
         - This does not necessarily mean only *responsive.*
     2. Three main descriptors:
