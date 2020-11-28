@@ -1,4 +1,6 @@
-Progressive Web Apps by Maximilian Schwarzmuller
+## Culled from an Udemy class entitled:
+## "Progressive Web Apps: The Complete Guide" 
+- by Maximilian Schwarzmuller:
 
 - Getting started: PWAs. What are they?
     1. Features added to any Web pages to enhance them to feel and work like native Web applications.
@@ -19,7 +21,7 @@ Progressive Web Apps by Maximilian Schwarzmuller
         b. PWA: Uses a lot of JavaScript. Aims to be reactive. Works with multiple files.
     7. Progrssive Enhamcement.
 
-- Understanding the App Manifest:
+#### Understanding the App Manifest:
     1. Single file.
     2. Why? Allow us to get our Web app on the home screen.
     3. Where? How to test our minifest.json name/values. Application => Manifest within Chrome Debugger Tools.
