@@ -1,25 +1,57 @@
-Progressive Web Apps by Maximilian Schwarzmuller
+# Culled from an Udemy class entitled "Progressive Web Apps: The Complete Guide" 
+- by Maximilian Schwarzmuller:
 
-- Getting started: PWAs. What are they?
+### Getting started: PWAs. What are they?
     1. Features added to any Web pages to enhance them to feel and work like native Web applications.
         - This does not necessarily mean only *responsive.*
     2. Three main descriptors:
         a. Be reliable. Load quick and provide offline functionality.
         b. Fast: Respond quickly to user actions.
         c. Engaging: Feel like a native app on mobile devices.
-    3. Mobile Web versus Native Apps. Lighthouse Chrome (as a Chrome extension.)
-    4. Our first PWA. Gosh. Starter Kit.
-    5. Core Building Blocks
+            - Push notifications. Continually bring a user back to the app.
+    3. Mobile Web versus Native Apps.
+        - 87% in native app. 13% within mobile Web.
+        - Push notifications. Home screen icons. Access to native features. "Work" offline.
+        - And we can always bring these things into the Web.
+        - Top three apps. 80% of the time. Average user does not install a new app.
+        - Lighthouse Chrome (as a Chrome extension.)
+        - Perform an audit at how gwellreat your progressive Web app performs.
+    4. Our first PWA. Starter Kit.
+    ```javascript
+        npm install
+        mpn audit fix
+        npm start
+    ```
+    5. Core Building Blocks:
         a. Service workers. JavaScript running in a background process. Even if the application is closed.
+            - Caching/offline support.
+            - Background sync.
+            - Web push.
         b. Application manifest. Making the application *installable.*
-        c. Responsive design.
+        c. Responsive design. Looking good across devices.
         d. Geolocation API. Media API. et al.
     6. PWAs versus SPAs.
         a. SPA: Powered by JavaScript. Highly Reactive. Only one HTML file.
+            - Framework rerenders the DOM.
         b. PWA: Uses a lot of JavaScript. Aims to be reactive. Works with multiple files.
-    7. Progrssive Enhamcement.
+            - Collection of technologies and techniques.
+    7. What is progressive enhamcement?
+    8. Course outline:
+        - Application manifest.
+        - Service worker basics.
+        - Promise and the Fetch API.
+        - Service worker caching for offline access.
+        - Advanced caching strategies.
+        - Caching dynamic data with IndexedDB.
+        - Responsive design.
+        - Background sync.
+        - Web push notifications.
+        - Media API & Geolocation.
+        - Automated SW management.
+        - SPAs & PWAs with your #1 framework.
 
-- Understanding the App Manifest:
+
+### Understanding the App Manifest:
     1. Single file.
     2. Why? Allow us to get our Web app on the home screen.
     3. Where? How to test our minifest.json name/values. Application => Manifest within Chrome Debugger Tools.
