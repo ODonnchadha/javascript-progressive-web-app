@@ -50,14 +50,30 @@
         - Automated SW management.
         - SPAs & PWAs with your #1 framework.
 
-#### Understanding the App Manifest:
-    1. Single file.
-    2. Why? Allow us to get our Web app on the home screen.
-    3. Where? How to test our minifest.json name/values. Application => Manifest within Chrome Debugger Tools.
-    4. Android Studio. Mobile device emulator. With the install feature.
-    5. *Installation* of the progressive Web App on a mobile phone.
-    6. Stupid Safari. We add meta tags to help us out.
-    7. And IE.
+- Understanding the App Manifest:
+    1. Single file. Manifest.json. What makes it up? How is it added? And how is it configured?
+    2. Why? Type URL or manage bookmark. Allow us to get our Web app on the home screen and drive user engagement.
+    3. Add file to public folder. Must be named 'manifest.'
+        - NOTE: *All* pages in the app need this link.
+        ```html
+            <link rel="manifest" href="/manifest.json">
+        ```
+        - Scope: Which pages are included within the PWA experience? (All pages use these settings.)
+        - Display: How should the app load. (No URL bar, for example. The app looks native.) Also, "fullscreen", "minimal-ui", and "browser."
+        - Direction: Left-to-right.
+        - Orientation: Set, and enforce, default orientation. Restrict with care. Try to support both portrait and landscape.
+        - Icons: Configuration. Brower will determine best-fitting.
+        - Related Applications: Set-up native applications. From browser to native if so desired.
+        ```javascript
+            "scope": ".",
+            "display": "standalone",
+            "dir": "ltr"
+        ```
+    4. Testing manifest.json with Chrome Dev Tools. Application => Manifest.
+    5. Android Studio. Mobile device emulator. With the install feature. Why? Andriod supports Chrome.
+    6. Requirements for "Add to Home Screen" banner. *Installation* of the progressive Web App on a mobile phone.
+    7. Stupid Safari. On iOS. We add meta tags to help us out.
+    8. And IE. NOTE: Every single HTML file needs these.
 
 - Service Workers:
     1. Behind the scenes. Offline ready. Next-generation. JavaScript is single-threaded.
