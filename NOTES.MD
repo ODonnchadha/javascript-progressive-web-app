@@ -76,15 +76,39 @@
     8. And IE. NOTE: Every single HTML file needs these.
 
 - Service Workers:
-    1. Behind the scenes. Offline ready. Next-generation. JavaScript is single-threaded.
-        a. They run on their own thread. They are decoupled from HTML pages. 
-        b. Manages all pages of a given scope. Lives on after pages have been closed. Run in the background.
-        c. Service workers are exceptional at reacting to events.
-    2. Listenable events: 
-        a. Fetch. Push notifications. Notification interaction. 
-        b. Background sync. e.g.: Failed POST. Service worker lifecycle.
-    3. Service Worker Lifecycle:
+    - "Installing" the application on the homescreen.
+    1. Behind the scenes. Offline ready. Next-generation Web application features: Push notifications and background synchronization.
+        - JavaScript is single-threaded. Page-loaded JS that can then manipulate the DOM.
+        a. They have access to different features. They run on their own thread. They are decoupled from HTML pages.
+            - Register the service worker through the page initially.
+            - Run under a different 'scope.'
+        b. Manages all pages of a given scope. (e.g. all of the pages of a domain.) Lives on after pages have been closed. Runs in the background.
+        c. Service workers are *exceptional at reacting to events* since they run in the background.
+        d. Again:
+            - Runs on an additional thread.
+            - Decoupled from HTML pages.
+            - Manages all pages of a given scope. e.g.: domain.
+            - Lives on even after pages have been closed.
+    2. "Listenable" events (in a service worker:)
+        a. Fetch. Browser or page-related JavaScript initiates an HTTP request. e.g.: Obtaining an image.
+            - The service worker becomes a network proxy.
+        b. Push notifications: receiving server notification.
+        c. Notification interction: User interaction with displayed notification.
+        d. Background sync. e.g.: Failed POST. Internet connect was reestablished.
+        e. Service worker lifecycle: SW phase changes. e.g.: While the SW is installing.
+    - In startup script, ensure that caching (-c-1) does not occur:
+    ```javascript
+        "scripts": {
+            "start": "http-server -c-1"
+        },
+    ```
+    - (1) Default browser cache and (2) a cache that the service worker uses.
+    - With respect to scope, place the sw at the root. Once in a folder, for example, the scope changes to *only* those pages within the subfolder.
+    - Scope, by default, *always* is the folder the service worker resides in.
+    
+    3. Service Worker Lifecycle: Tell the browser that this is not "normal" JS code but a background process.
         a. index.html loads app.js which registers sw.js.
+        b. So this registration proicess returns a promise. Thus the .then().
         ```javascript
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker
@@ -94,7 +118,10 @@
                 });
             }
         ```
+            - Installation => Install event.
+            - Activation => Activation event. e.g.: Service worker now controls all pages of Scope.
         b. Registration: (1) Installation event. (2) Activation event. (3) Idle mode. (4) Terminate.
+            - Register the service worker in every page that uses it. e.g.: imdex.html and /help/index.html
         c. Browser support.
         d. NOTE: navigator.serviceWorker.register() returns a promise. And they only work via https.
         e. Non-lifecycle events.
