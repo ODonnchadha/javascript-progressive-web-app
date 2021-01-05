@@ -128,6 +128,24 @@
         f. And now back to the web app banners page since we have a service worker.
         g. Andriod emulator. Elipsis => More Tools => Remote Devices.
             1. Manifest. "Add to homescreen."
+    - More on SW:
+        - Known as 'self.' Access to different events, such as 'install' and 'activate.'
+        - Updating and activating: 
+        - NOTE: If you have a window open with your page, new service workers will become installed but not activated.
+        - Close, reopen existing tabs. The *new* version will be activated.
+        - You can select 'Update on reload' within developer tools.
+        - Non-lifecycle events.
+        - 'fetch.' Loading scripts. images. Also, manual triggers. Makes the sw a network proxy.
+        ```javascript
+            self.addEventListener('fetch', function(event) {
+                console.log('fetch ', event);
+            });
+        ```
+    - The App install banner:
+        - Criteria: (a) Web app manifest. (b) Service worker. (c) Severed over HTTPS. (d) Visited at least twice over five minute duration.
+        - Connect personal device. Within DevTools head to "More Tools" and "Remote Devices." Ensure that "Port forwarding" is enabled.
+        - Select 'Manifest' and 'Add to home screen' to trigger manually.
+        - 'beforeinstallprompt' event to disallow Chrome to display the app install banner. e.g.: event.preventDefault();
 
 - Promises and Fetch:
     1. Promises can free us from callback hell. Here's a callback function.
